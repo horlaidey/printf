@@ -30,7 +30,7 @@ void _putint(int val)
 {
 	int n, m;
 
-	if (val > 0)
+	if (val >= 0)
 	{
 		n = val / 10;
 		m = val % 10;
