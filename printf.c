@@ -45,7 +45,7 @@ int _printf(const char *format, ...)
 		if (format[i] == '%' &&
 		(format[i + 1] == 'd' || format[i + 1] == 'i'))
 		{
-			_putint(va_arg(args, unsigned int));
+			_putint(va_arg(args, int));
 			val++;
 		}
 		if (format[i] == '%' && format[i + 1] == 'b')
