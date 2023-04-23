@@ -25,7 +25,7 @@ void _putstr(char *str)
 int _printf(const char *format, ...)
 {
 	int len = _strlen((char *)format);
-	int i;
+	int i, val = 0;
 	va_list args;
 
 	va_start(args, format);
@@ -35,28 +35,33 @@ int _printf(const char *format, ...)
 		if (format[i] == '%' && format[i + 1] == 'c')
 		{
 			_putchar(va_arg(args, int));
+			val++;
 		}
 		if (format[i] == '%' && format[i + 1] == 's')
 		{
 			_putstr(va_arg(args, char *));
+			val++;
 		}
 		if (format[i] == '%' &&
 		(format[i + 1] == 'd' || format[i + 1] == 'i'))
 		{
 			_putint(va_arg(args, unsigned int));
+			val++;
 		}
 		if (format[i] == '%' && format[i + 1] == 'b')
 		{
 			_binary(va_arg(args, unsigned int));
+			val++;
 		}
-		if (format[i -1] == '%')
+		if (format[i - 1] == '%')
 		{
 			continue;
 		}
 		if (format[i] != '%')
 		{
 			_putchar(format[i]);
+			val++;
 		}
 	}
-	return (0);
+	return (val);
 }

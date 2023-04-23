@@ -9,6 +9,7 @@
 void _binary(unsigned int n)
 {
 	unsigned int i, j;
+
 	i = n / 2;
 	j = n % 2;
 
