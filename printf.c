@@ -5,14 +5,17 @@
  * Return: Nothing
  */
 
-void _putstr(char *str)
+int _putstr(char *str)
 {
-	int i;
+	int lent;
 
-	for (i = 0; i < _strlen(str); i++)
+	if (str == NULL)
 	{
-		_putchar(str[i]);
+		str = "(null)";
 	}
+	lent = _strlen(str);
+
+	return (write(1, str, lent));
 }
 
 
@@ -26,6 +29,7 @@ int _printf(const char *format, ...)
 {
 	int len = _strlen((char *)format);
 	int i, val = 0;
+	char *key;
 	va_list args;
 
 	if (format == NULL)
@@ -41,7 +45,8 @@ int _printf(const char *format, ...)
 		}
 		if (format[i] == '%' && format[i + 1] == 's')
 		{
-			_putstr(va_arg(args, char *));
+			key = va_arg(args, char *);
+			_putstr(key);
 			val++;
 		}
 		if (format[i] == '%' &&

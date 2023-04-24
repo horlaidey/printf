@@ -26,9 +26,9 @@ int _abs(int num)
  * Return: void.
  */
 
-void _putint(int val)
+int _putint(int val)
 {
-	int n, m;
+	int n, m, i = 0;
 
 	if (val >= 0)
 	{
@@ -37,9 +37,11 @@ void _putint(int val)
 		if (val < 10)
 		{
 			_putchar(val + 48);
+			i++;
 		}
 		else
 		{
+			i++;
 			_putint(n);
 			_putchar(m + 48);
 		}
@@ -50,4 +52,5 @@ void _putint(int val)
 		_putchar(45);
 		_putint(n);
 	}
+	return (i);
 }

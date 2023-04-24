@@ -6,9 +6,10 @@
  * Return: Nothing
  */
 
-void _binary(unsigned int n)
+int _binary(unsigned int n)
 {
 	unsigned int i, j;
+	int val = 0;
 
 	i = n / 2;
 	j = n % 2;
@@ -16,10 +17,13 @@ void _binary(unsigned int n)
 	if (n < 2)
 	{
 		_putchar(n + 48);
+		val++;
 	}
 	else
 	{
+		val++;
 		_binary(i);
 		_putchar(j + 48);
 	}
+	return (val);
 }

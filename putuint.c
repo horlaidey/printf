@@ -7,19 +7,23 @@
  * Return: void.
  */
 
-void _putuint(unsigned int val)
+int _putuint(unsigned int val)
 {
 	unsigned int n, m;
+	int i = 0;
 
 	n = val / 10;
 	m = val % 10;
 	if (val < 10)
 	{
 		_putchar(val + 48);
+		i++;
 	}
 	else
 	{
+		i++;
 		_putuint(n);
 		_putchar(m + 48);
 	}
+	return (i);
 }

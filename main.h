@@ -6,9 +6,9 @@
 int _putchar(char);
 int _printf(const char *format, ...);
 int _strlen(char *);
-void _putint(int);
-void _putuint(unsigned int);
-void _binary(unsigned int);
+int _putint(int);
+int _putuint(unsigned int);
+int _binary(unsigned int);
 
 
 
