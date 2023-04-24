@@ -49,6 +49,11 @@ int _printf(const char *format, ...)
 			_putstr(key);
 			val++;
 		}
+		if (format[i] == '%' && format[i + 1] == '%')
+		{
+			_putchar('%');
+			val++;
+		}
 		if (format[i] == '%' &&
 		(format[i + 1] == 'd' || format[i + 1] == 'i'))
 		{
