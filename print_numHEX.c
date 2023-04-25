@@ -1,45 +1,45 @@
 #include "main.h"
 /**
- * prinnupx - prints number in uppercase hex
- * @arguments: input string
- * @buf: buffer pointer
- * @ibuf: index for buffer pointer
+ * _putnHEX - prints number in uppercase hex
+ * @list: input string
+ * @buff: buffer pointer
+ * @index: index for buffer pointer
  * Return: number of chars printed
  */
-int prinnupx(va_list arguments, char *buf, unsigned int ibuf)
+int _putnHEX(va_list list, char *buff, unsigned int index)
 {
-	int int_input, i, isnegative, count, first_digit;
-	char *hexadecimal, *binary;
+	int input, i, is_neg, len, int_tmp;
+	char *hexdec, *binr;
 
-	int_input = va_arg(arguments, int);
-	isnegative = 0;
-	if (int_input == 0)
+	input = va_arg(list, int);
+	is_neg = 0;
+	if (input == 0)
 	{
-		ibuf = handl_buf(buf, '0', ibuf);
+		index = handle_print(buff, '0', index);
 		return (1);
 	}
-	if (int_input < 0)
+	if (input < 0)
 	{
-		int_input = (int_input * -1) - 1;
-		isnegative = 1;
+		input = (input * -1) - 1;
+		is_neg = 1;
 	}
-	ibuf = handl_buf(buf, '0', ibuf);
-	ibuf = handl_buf(buf, 'X', ibuf);
-	binary = malloc(sizeof(char) * (32 + 1));
-	binary = fill_binary_array(binary, int_input, isnegative, 32);
-	hexadecimal = malloc(sizeof(char) * (8 + 1));
-	hexadecimal = fill_hex_array(binary, hexadecimal, 1, 8);
-	for (first_digit = i = count = 0; hexadecimal[i]; i++)
+	index = handle_print(buff, '0', index);
+	index = handle_print(buff, 'X', index);
+	binr = malloc(sizeof(char) * (32 + 1));
+	binr = binary_array(binr, input, is_neg, 32);
+	hexdec = malloc(sizeof(char) * (8 + 1));
+	hexdec = hex_array(binr, hexdec, 1, 8);
+	for (int_tmp = i = len = 0; hexdec[i]; i++)
 	{
-		if (hexadecimal[i] != '0' && first_digit == 0)
-			first_digit = 1;
-		if (first_digit)
+		if (hexdec[i] != '0' && int_tmp == 0)
+			int_tmp = 1;
+		if (int_tmp)
 		{
-			ibuf = handl_buf(buf, hexadecimal[i], ibuf);
-			count++;
+			index = handle_print(buff, hexdec[i], index);
+			len++;
 		}
 	}
-	free(binary);
-	free(hexadecimal);
-	return (count + 2);
+	free(binr);
+	free(hexdec);
+	return (len + 2);
 }
