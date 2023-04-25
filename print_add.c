@@ -1,53 +1,53 @@
 #include "main.h"
 #include <stdio.h>
 /**
- * print_add - prints the address of an input variable
- * @arguments: input address.
- * @buf: buffer pointer.
- * @ibuf: index for buffer pointer
+ * _putadd - prints the address of an input variable
+ * @list: input address.
+ * @buff: buffer pointer.
+ * @index: index for buffer pointer
  *
  * Return: number of chars printed.
  */
-int print_add(va_list arguments, char *buf, unsigned int ibuf)
+int _putadd(va_list list, char *buff, unsigned int index)
 {
 	void *add;
-	long int int_input;
-	int i, count, first_digit, isnegative;
-	char *hexadecimal, *binary;
-	char nill[] = "(nil)";
+	long int input;
+	int i, len, int_tmp, is_neg;
+	char *hexdec, *binr;
+	char empty[] = "(nil)";
 
-	add = (va_arg(arguments, void *));
+	add = (va_arg(list, void *));
 	if (add == NULL)
 	{
-		for (i = 0; nill[i]; i++)
-			ibuf = handl_buf(buf, nill[i], ibuf);
+		for (i = 0; empty[i]; i++)
+			index = handle_print(buff, empty[i], index);
 		return (5);
 	}
-	int_input = (intptr_t)add;
-	isnegative = 0;
-	if (int_input < 0)
+	input = (intptr_t)add;
+	is_neg = 0;
+	if (input < 0)
 	{
-		int_input = (int_input * -1) - 1;
-		isnegative = 1;
+		input = (input * -1) - 1;
+		is_neg = 1;
 	}
-	binary = malloc(sizeof(char) * (64 + 1));
-	binary = fill_binary_array(binary, int_input, isnegative, 64);
-	hexadecimal = malloc(sizeof(char) * (16 + 1));
-	hexadecimal = fill_hex_array(binary, hexadecimal, 0, 16);
-	ibuf = handl_buf(buf, '0', ibuf);
-	ibuf = handl_buf(buf, 'x', ibuf);
-	for (first_digit = i = count = 0; hexadecimal[i]; i++)
+	binr = malloc(sizeof(char) * (64 + 1));
+	binr = binary_array(binr, input, is_neg, 64);
+	hexdec = malloc(sizeof(char) * (16 + 1));
+	hexdec = hex_array(binr, hexdec, 0, 16);
+	index = handle_print(buff, '0', index);
+	index = handle_print(buff, 'x', index);
+	for (int_tmp = i = len = 0; hexdec[i]; i++)
 	{
-		if (hexadecimal[i] != '0' && first_digit == 0)
-			first_digit = 1;
-		if (first_digit)
+		if (hexdec[i] != '0' && int_tmp == 0)
+			int_tmp = 1;
+		if (int_tmp)
 		{
-			ibuf = handl_buf(buf, hexadecimal[i], ibuf);
-			count++;
+			index = handle_print(buff, hexdec[i], index);
+			len++;
 		}
 	}
-	free(binary);
-	free(hexadecimal);
-	return (count + 2);
+	free(binr);
+	free(hexdec);
+	return (len + 2);
 }
 

@@ -1,44 +1,44 @@
 #include "main.h"
 /**
- * prinlhex - prints a long decimal in hexadecimal
- * @arguments: input string
- * @buf: buffer pointer
- * @ibuf: index for buffer pointer
+ * _putlhex - prints a long decimal in hexadecimal
+ * @list: input string
+ * @buff: buffer pointer
+ * @index: index for buffer pointer
  * Return: number of chars printed
  */
-int prinlhex(va_list arguments, char *buf, unsigned int ibuf)
+int _putlhex(va_list list, char *buff, unsigned int index)
 {
-	long int int_input, i, isnegative, count, first_digit;
-	char *hexadecimal, *binary;
+	long int input, i, is_neg, j, int_tmp;
+	char *hexdec, *binr;
 
-	int_input = va_arg(arguments, long int);
-	isnegative = 0;
-	if (int_input == 0)
+	input = va_arg(list, long int);
+	is_neg = 0;
+	if (input == 0)
 	{
-		ibuf = handl_buf(buf, '0', ibuf);
+		index = handle_print(buff, '0', index);
 		return (1);
 	}
-	if (int_input < 0)
+	if (input < 0)
 	{
-		int_input = (int_input * -1) - 1;
-		isnegative = 1;
+		input = (input * -1) - 1;
+		is_neg = 1;
 	}
 
-	binary = malloc(sizeof(char) * (64 + 1));
-	binary = fill_binary_array(binary, int_input, isnegative, 64);
-	hexadecimal = malloc(sizeof(char) * (16 + 1));
-	hexadecimal = fill_hex_array(binary, hexadecimal, 0, 16);
-	for (first_digit = i = count = 0; hexadecimal[i]; i++)
+	binr = malloc(sizeof(char) * (64 + 1));
+	binr = binary_array(binr, input, is_neg, 64);
+	hexdec = malloc(sizeof(char) * (16 + 1));
+	hexdec = hex_array(binr, hexdec, 0, 16);
+	for (int_tmp = i = j = 0; hexdec[i]; i++)
 	{
-		if (hexadecimal[i] != '0' && first_digit == 0)
-			first_digit = 1;
-		if (first_digit)
+		if (hexdec[i] != '0' && int_tmp == 0)
+			int_tmp = 1;
+		if (int_tmp)
 		{
-			ibuf = handl_buf(buf, hexadecimal[i], ibuf);
-			count++;
+			index = handle_print(buff, hexdec[i], index);
+			j++;
 		}
 	}
-	free(binary);
-	free(hexadecimal);
-	return (count);
+	free(binr);
+	free(hexdec);
+	return (j);
 }

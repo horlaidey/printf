@@ -1,44 +1,44 @@
 #include "main.h"
 /**
- * prinloct - prints long decimal number in octal
- * @arguments: input number
- * @buf: buffer pointer
- * @ibuf: index for buffer pointer
+ * _putloct - prints long decimal number in octal
+ * @list: input number
+ * @buff: buffer pointer
+ * @index: index for buffer pointer
  * Return: number of chars printed.
  */
-int prinloct(va_list arguments, char *buf, unsigned int ibuf)
+int _putloct(va_list list, char *buff, unsigned int index)
 {
-	long int int_input, i, isnegative, count, first_digit;
-	char *octal, *binary;
+	long int input, i, is_neg, len, int_tmp;
+	char *oct, *binr;
 
-	int_input = va_arg(arguments, long int);
-	isnegative = 0;
-	if (int_input == 0)
+	input = va_arg(list, long int);
+	is_neg = 0;
+	if (input == 0)
 	{
-		ibuf = handl_buf(buf, '0', ibuf);
+		index = handle_print(buff, '0', index);
 		return (1);
 	}
-	if (int_input < 0)
+	if (input < 0)
 	{
-		int_input = (int_input * -1) - 1;
-		isnegative = 1;
+		input = (input * -1) - 1;
+		is_neg = 1;
 	}
 
-	binary = malloc(sizeof(char) * (64 + 1));
-	binary = fill_binary_array(binary, int_input, isnegative, 64);
-	octal = malloc(sizeof(char) * (22 + 1));
-	octal = fill_long_oct_array(binary, octal);
-	for (first_digit = i = count = 0; octal[i]; i++)
+	binr = malloc(sizeof(char) * (64 + 1));
+	binr = binary_array(binr, input, is_neg, 64);
+	oct = malloc(sizeof(char) * (22 + 1));
+	oct = long_oct_array(binr, oct);
+	for (int_tmp = i = len = 0; oct[i]; i++)
 	{
-		if (octal[i] != '0' && first_digit == 0)
-			first_digit = 1;
-		if (first_digit)
+		if (oct[i] != '0' && int_tmp == 0)
+			int_tmp = 1;
+		if (int_tmp)
 		{
-			ibuf = handl_buf(buf, octal[i], ibuf);
-			count++;
+			index = handle_print(buff, oct[i], index);
+			len++;
 		}
 	}
-	free(binary);
-	free(octal);
-	return (count);
+	free(binr);
+	free(oct);
+	return (len);
 }

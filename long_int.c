@@ -1,27 +1,27 @@
 #include "main.h"
 /**
- * prinlint - prints a long integer
- * @arguments: input string
- * @buf: buffer pointer
- * @ibuf: index for buffer pointer
+ * _putlint - prints a long integer
+ * @list: input string
+ * @buff: buffer pointer
+ * @index: index for buffer pointer
  * Return: number of chars printed.
  */
-int prinlint(va_list arguments, char *buf, unsigned int ibuf)
+int _putlint(va_list list, char *buff, unsigned int index)
 {
-	long int int_input;
-	unsigned long int int_in, int_temp, i, div, isneg;
+	long int input;
+	unsigned long int int_in, int_temp, i, div, is_neg;
 
-	int_input = va_arg(arguments, long int);
-	isneg = 0;
-	if (int_input < 0)
+	input = va_arg(arguments, long int);
+	is_neg = 0;
+	if (input < 0)
 	{
-		int_in = int_input * -1;
-		ibuf = handl_buf(buf, '-', ibuf);
-		isneg = 1;
+		int_in = input * -1;
+		index = handle_print(buff, '-', index);
+		is_neg = 1;
 	}
 	else
 	{
-		int_in = int_input;
+		int_in = input;
 	}
 
 	int_temp = int_in;
@@ -33,7 +33,7 @@ int prinlint(va_list arguments, char *buf, unsigned int ibuf)
 	}
 	for (i = 0; div > 0; div /= 10, i++)
 	{
-		ibuf = handl_buf(buf, ((int_in / div) % 10) + '0', ibuf);
+		index = handle_print(buff, ((int_in / div) % 10) + '0', index);
 	}
-	return (i + isneg);
+	return (i + is_neg);
 }
