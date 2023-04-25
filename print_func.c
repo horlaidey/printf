@@ -6,7 +6,6 @@
  *
  * Return: integer value of total identifiers
  */
-
 int print_func(const char *str, int index)
 {
 	print_fn fp[] = {
@@ -38,7 +37,8 @@ int print_func(const char *str, int index)
 		{
 			if (fp[i].fmt[j + 1] != '\0')
 			{
-				index++; j++;
+				index++;
+				j++;
 			}
 			else
 			{
@@ -53,4 +53,4 @@ int print_func(const char *str, int index)
 		}
 	}
 	return (j);
-}	
+}

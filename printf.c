@@ -61,7 +61,7 @@ int _printf(const char *format, ...)
 			handle_print(buff, format[i], index);
 			j++;
 		}
-		for (index = j; index > 1024; index -=1024)
+		for (index = j; index > 1024; index -= 1024)
 		{
 			;
 		}

@@ -28,7 +28,6 @@ int _putint(va_list list, char *buff, unsigned int index)
 	}
 	int_tmp = int_in;
 	div = 1;
-	
 	while (int_tmp > 9)
 	{
 		div *= 10;
