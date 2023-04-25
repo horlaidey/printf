@@ -1,79 +1,73 @@
 #include "main.h"
-/**
- * _putstr - prints string to the standard output
- * @str: the string to be printed
- * Return: Nothing
- */
-
-int _putstr(char *str)
-{
-	int lent;
-
-	if (str == NULL)
-	{
-		str = "(null)";
-	}
-	lent = _strlen(str);
-
-	return (write(1, str, lent));
-}
-
 
 /**
  * _printf - prints to the standard output
  * @format: the first argument indicating the format of output
  *
- * Return: Always 0.
+ * Return: Number of character printed
  */
 int _printf(const char *format, ...)
 {
-	int len = _strlen((char *)format);
-	int i, val = 0;
-	char *key;
+	unsigned int i = 0, index = 0, j = 0;
 	va_list args;
+	int (*funct)(va_list, char *, unsigned int);
+	char *buff;
 
-	if (format == NULL)
-		return (-1);
 	va_start(args, format);
-
-	for (i = 0; i < len; i++)
+	buff = malloc(sizeof(char) * 1024);
+	if (!format || !buff || (format[i] == '%' && !format[i + 1]))
 	{
-		if (format[i] == '%' && format[i + 1] == 'c')
+		return (-1);
+	}
+	if (!format[i])
+	{
+		return (0);
+	}
+	for (i = 0; format && format[i]; i++)
+	{
+		if (format[i] == '%')
 		{
-			_putchar(va_arg(args, int));
-			val++;
+			if (format[i + 1] == '\0')
+			{
+				print_buffer(buff, index);
+				free(buff);
+				va_end(args);
+				return (-1);
+			}
+			else
+			{
+				funct = get_fmt(format, i + 1);
+				if (funct == NULL)
+				{
+					if (format[i + 1] == ' ' &&
+					!format[i + 2])
+					{
+						return (-1);
+					}
+					handle_print(buff, format[i], index);
+					j++;
+					i--;
+				}
+				else
+				{
+					j += funct(args, buff, index);
+					i += print_func(format, i + 1);
+				}
+			}
+			i++;
 		}
-		if (format[i] == '%' && format[i + 1] == 's')
+		else
 		{
-			key = va_arg(args, char *);
-			_putstr(key);
-			val++;
+			handle_print(buff, format[i], index);
+			j++;
 		}
-		if (format[i] == '%' && format[i + 1] == '%')
+		for (index = j; index > 1024; index -=1024)
 		{
-			_putchar('%');
-			val++;
-		}
-		if (format[i] == '%' &&
-		(format[i + 1] == 'd' || format[i + 1] == 'i'))
-		{
-			_putint(va_arg(args, int));
-			val++;
-		}
-		if (format[i] == '%' && format[i + 1] == 'b')
-		{
-			_binary(va_arg(args, unsigned int));
-			val++;
-		}
-		if (format[i - 1] == '%')
-		{
-			continue;
-		}
-		if (format[i] != '%')
-		{
-			_putchar(format[i]);
-			val++;
+			;
 		}
 	}
-	return (val);
+	print_buffer(buff, index);
+	free(buff);
+	va_end(args);
+	return (j);
 }

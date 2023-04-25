@@ -1,29 +1,45 @@
 #include "main.h"
 /**
  * _binary - converts an unsigned integer to binary
- * @n: an unsigned input integer
+ * @list: string input from stdarg
+ * @buff: pointer to string buffer
+ * @index: position of the char in the buffer
  *
- * Return: Nothing
+ * Return: Numbers of printed chars
  */
 
-int _binary(unsigned int n)
+int _binary(va_list list, char *buff, unsigned int index)
 {
-	unsigned int i, j;
-	int val = 0;
+	int input, i, j, k, is_neg;
+	char *binr;
 
-	i = n / 2;
-	j = n % 2;
-
-	if (n < 2)
+	input = va_arg(list, int);
+	is_neg = 0;
+	if (input == 0)
 	{
-		_putchar(n + 48);
-		val++;
+		index = handle_print(buff, '0', index);
+		return (1);
 	}
-	else
+	if (input < 0)
 	{
-		val++;
-		_binary(i);
-		_putchar(j + 48);
+		input = (input * -1) - 1;
+		is_neg = 1;
 	}
-	return (val);
+	binr = malloc(sizeof(char) * (32 + 1));
+	binr = binary_array(binr, input, is_neg, 32);
+	k = 0;
+	for (j = i = 0; binr[i]; i++)
+	{
+		if (k == 0 && binr[i] == '1')
+		{
+			k = 1;
+		}
+		if (k == 1)
+		{
+			index = handle_print(buff, binr[i], index);
+			j++;
+		}
+	}
+	free(binr);
+	return (j);
 }

@@ -2,28 +2,28 @@
 
 /**
  * _putuint - prints unsigned integer value to standard output
- * @val: unsigned integer value to be printed
+ * @list: input value from stdarg
+ * @buff: pointer to a string buffer
+ * @index: position of the char in buffer
  *
- * Return: void.
+ * Return: number of chars printed
  */
 
-int _putuint(unsigned int val)
+int _putuint(va_list list, char *buff, unsigned int index)
 {
-	unsigned int n, m;
-	int i = 0;
+	unsigned int input, int_tmp, i, div;
 
-	n = val / 10;
-	m = val % 10;
-	if (val < 10)
+	input = va_arg(list, unsigned int);
+	int_tmp = input;
+	div = 1;
+	while (int_tmp > 9)
 	{
-		_putchar(val + 48);
-		i++;
+		div *= 10;
+		int_tmp /= 10;
 	}
-	else
+	for (i = 0; div > 0; div /= 10, i++)
 	{
-		i++;
-		_putuint(n);
-		_putchar(m + 48);
+		index = handle_print(buff, ((input / div) % 10) + '0', index);
 	}
 	return (i);
 }

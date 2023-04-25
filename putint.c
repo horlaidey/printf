@@ -1,56 +1,43 @@
 #include "main.h"
 
 /**
- * _abs - converts signed int to unsigned int
- * @num: integer value to be converted to it absolute
- *
- * Return: Absolute value of the input integer.
- */
-
-int _abs(int num)
-{
-	if (num < 0)
-	{
-		return (-1 * num);
-	}
-	else
-	{
-		return (num);
-	}
-}
-
-/**
  * _putint - prints integer value to standard output
- * @val: integer value to be printed
+ * @list: input string from the stdarg
+ * @buff: pointer to a string buffer
+ * @index: position of the buffer
  *
- * Return: void.
+ * Return: Number of printed chars
  */
 
-int _putint(int val)
+int _putint(va_list list, char *buff, unsigned int index)
 {
-	int n, m, i = 0;
+	int input;
+	unsigned int int_in, int_tmp, i, div, is_neg;
 
-	if (val >= 0)
+	input = va_arg(list, int);
+	is_neg = 0;
+	if (input < 0)
 	{
-		n = val / 10;
-		m = val % 10;
-		if (val < 10)
-		{
-			_putchar(val + 48);
-			i++;
-		}
-		else
-		{
-			i++;
-			_putint(n);
-			_putchar(m + 48);
-		}
+		int_in = input * -1;
+		index = handle_print(buff, '-', index);
+		is_neg = 1;
 	}
 	else
 	{
-		n = _abs(val);
-		_putchar(45);
-		_putint(n);
+		int_in = input;
 	}
-	return (i);
+	int_tmp = int_in;
+	div = 1;
+	
+	while (int_tmp > 9)
+	{
+		div *= 10;
+		int_tmp /= 10;
+	}
+
+	for (i = 0; div > 0; div /= 10, i++)
+	{
+		index = handle_print(buff, ((int_in / div) % 10) + '0', index);
+	}
+	return (i + is_neg);
 }
