@@ -1,21 +1,21 @@
 #include "main.h"
 /**
- * prinhoct - prints long decimal number in octal
- * @arguments: input number
- * @buf: buffer pointer
- * @ibuf: index for buffer pointer
+ * _puthoct - prints long decimal number in octal
+ * @list: input number
+ * @buff: buffer pointer
+ * @index: index for buffer pointer
  * Return: number of chars printed.
  */
-int prinhoct(va_list arguments, char *buf, unsigned int ibuf)
+int _puthoct(va_list list, char *buff, unsigned int index)
 {
 	short int int_input, i, isnegative, count, first_digit;
 	char *octal, *binary;
 
-	int_input = va_arg(arguments, int);
+	int_input = va_arg(list, int);
 	isnegative = 0;
 	if (int_input == 0)
 	{
-		ibuf = handl_buf(buf, '0', ibuf);
+		index = handle_print(buff, '0', index);
 		return (1);
 	}
 	if (int_input < 0)
@@ -25,16 +25,16 @@ int prinhoct(va_list arguments, char *buf, unsigned int ibuf)
 	}
 
 	binary = malloc(sizeof(char) * (16 + 1));
-	binary = fill_binary_array(binary, int_input, isnegative, 16);
+	binary = binary_array(binary, int_input, isnegative, 16);
 	octal = malloc(sizeof(char) * (6 + 1));
-	octal = fill_short_oct_array(binary, octal);
+	octal = short_oct_array(binary, octal);
 	for (first_digit = i = count = 0; octal[i]; i++)
 	{
 		if (octal[i] != '0' && first_digit == 0)
 			first_digit = 1;
 		if (first_digit)
 		{
-			ibuf = handl_buf(buf, octal[i], ibuf);
+			index = handle_print(buff, octal[i], index);
 			count++;
 		}
 	}

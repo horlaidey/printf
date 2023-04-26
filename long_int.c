@@ -11,7 +11,7 @@ int _putlint(va_list list, char *buff, unsigned int index)
 	long int input;
 	unsigned long int int_in, int_temp, i, div, is_neg;
 
-	input = va_arg(arguments, long int);
+	input = va_arg(list, long int);
 	is_neg = 0;
 	if (input < 0)
 	{

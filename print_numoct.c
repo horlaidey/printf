@@ -25,7 +25,7 @@ int _putnoct(va_list list, char *buff, unsigned int index)
 	}
 	index = handle_print(buff, '0', index);
 	binary = malloc(sizeof(char) * (32 + 1));
-	binary = fill_binary_array(binary, int_input, isnegative, 32);
+	binary = binary_array(binary, int_input, isnegative, 32);
 	octal = malloc(sizeof(char) * (11 + 1));
 	octal = oct_array(binary, octal);
 	for (first_digit = i = count = 0; octal[i]; i++)
